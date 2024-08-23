@@ -1,0 +1,36 @@
+Here’s a summary of the steps we took to generate the file with traffic count data and its corresponding X, Y coordinates:
+
+### Steps to Generate the Merged Traffic Count with Coordinates File
+
+1. **Extract and Inspect Traffic Count Data**:
+   - We started by loading the traffic count data from the CSV file (`H20211092TabMef.csv`). This file contained columns such as road number (`kvish`), segment (`keta`), and traffic counts (`kamut_kle_rehev`).
+
+2. **Extract Road Segment Data with Coordinates**:
+   - We then loaded the road segment data from the Excel file (`H20211092RoadsNonUrban.xlsx`). This file included columns like the road number (`כביש`), segment number (`קטע`), and the corresponding geographic coordinates (`X`, `Y`).
+
+3. **Renaming Columns for Consistency**:
+   - To facilitate the merge, we renamed the relevant columns in the road segment data to match those in the traffic count data (`kvish` for road number, `keta` for segment number).
+
+4. **Merging the Data**:
+   - We merged the traffic count data with the road segment data based on the road number (`kvish`) and segment number (`keta`). This allowed us to append the X, Y coordinates to each traffic count entry.
+
+5. **Exporting the Merged Data**:
+   - Finally, we exported the merged data to a new CSV file (`merged_traffic_count_with_coordinates.csv`), which now contains traffic counts along with their specific geographic coordinates.
+
+### Resulting File
+- The final file (`merged_traffic_count_with_coordinates.csv`) contains traffic count data with each entry linked to specific X, Y coordinates, making it suitable for spatial analysis in GIS tools like QGIS.
+
+This file can now be used to map and analyze the relationship between traffic counts and road segments, including any further spatial analysis related to traffic accidents or other factors.
+
+
+
+CODE
+
+# First, let's rename the relevant columns in the roads_non_urban_data for consistency
+roads_non_urban_data.rename(columns={'כביש': 'kvish', 'קטע': 'keta', 'x': 'X', 'y': 'Y'}, inplace=True)
+
+# Now, let's merge the traffic count data with the road segment data based on 'kvish' and 'keta'
+merged_data = pd.merge(traffic_count_data, roads_non_urban_data[['kvish', 'keta', 'X', 'Y']], on=['kvish', 'keta'], how='left')
+
+# Display the first few rows of the merged data to verify the merge
+merged_data.head()
