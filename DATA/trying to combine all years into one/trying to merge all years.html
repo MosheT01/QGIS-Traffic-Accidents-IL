@@ -8678,7 +8678,7 @@ Combined Accident Data from All Years:
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Define the output path for the combined data</span>
-<span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'combined_accident_data1.csv'</span><span class="p">)</span>
+<span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'combined_accident_data.csv'</span><span class="p">)</span>
 
 <span class="c1"># Save the combined data to a CSV file</span>
 <span class="n">combined_accident_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -8697,7 +8697,7 @@ Combined Accident Data from All Years:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Combined accident data saved to c:\Users\mousa\Desktop\College\SHANA DALET\GIS\FINAL PROJECT GIT\QGIS-Traffic-Accidents-IL\DATA\combined_accident_data1.csv
+<pre>Combined accident data saved to c:\Users\mousa\Desktop\College\SHANA DALET\GIS\FINAL PROJECT GIT\QGIS-Traffic-Accidents-IL\DATA\combined_accident_data.csv
 </pre>
 </div>
 </div>
@@ -9072,6 +9072,14 @@ by calculating it</p>
 5      2    80  195812.0  734655.0
 6      3    10  163509.0  620663.0
 (2357, 4)
+
+   kvish  keta         X         Y
+1      1    52  193638.0  647061.0
+3      1    60  200817.0  636966.0
+4      2    70  192262.0  714572.0
+5      2    80  195812.0  734655.0
+6      3    10  163509.0  620663.0
+(2357, 4)
 </pre>
 </div>
 </div>
@@ -9085,11 +9093,11 @@ by calculating it</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1"># Define the base directory where your road segment data is stored</span>
-<span class="n">base_dir</span> <span class="o">=</span> <span class="s1">'../'</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">'../'</span><span class="p">)</span>  <span class="c1"># Ensure the base directory is correctly set</span>
 
 <span class="c1"># Load traffic count data</span>
 <span class="n">traffic_counts</span> <span class="o">=</span> <span class="p">{</span>
@@ -9120,10 +9128,10 @@ by calculating it</p>
         <span class="s1">'y'</span><span class="p">:</span> <span class="s1">'Y'</span>
     <span class="p">}</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_mapping</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'kvish'</span><span class="p">,</span> <span class="s1">'keta'</span><span class="p">,</span> <span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'kvish'</span><span class="p">,</span> <span class="s1">'keta'</span><span class="p">,</span> <span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">]]</span>  <span class="c1"># Keep only relevant columns</span>
 
 <span class="c1"># Function to standardize traffic count columns</span>
-<span class="k">def</span> <span class="nf">standardize_traffic_columns</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">standardize_traffic_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
     <span class="n">column_mapping</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">'shana'</span><span class="p">:</span> <span class="s1">'year'</span><span class="p">,</span>
         <span class="s1">'shnat_seker'</span><span class="p">:</span> <span class="s1">'year'</span><span class="p">,</span>
@@ -9133,7 +9141,6 @@ by calculating it</p>
         <span class="s1">'hodesh'</span><span class="p">:</span> <span class="s1">'hodesh'</span><span class="p">,</span>
         <span class="s1">'taarich'</span><span class="p">:</span> <span class="s1">'taarich'</span><span class="p">,</span>
         <span class="s1">'yom'</span><span class="p">:</span> <span class="s1">'yom'</span><span class="p">,</span>
-        <span class="s1">'yom_bashavua'</span><span class="p">:</span> <span class="s1">'yom'</span><span class="p">,</span>  <span class="c1"># Standardize yom_bashavua to yom</span>
         <span class="s1">'shaa'</span><span class="p">:</span> <span class="s1">'shaa'</span><span class="p">,</span>
         <span class="s1">'nefah'</span><span class="p">:</span> <span class="s1">'kamut_kle_rehev'</span><span class="p">,</span>  <span class="c1"># Standardize nefah to kamut_kle_rehev</span>
         <span class="s1">'kamut'</span><span class="p">:</span> <span class="s1">'kamut_kle_rehev'</span><span class="p">,</span>
@@ -9141,6 +9148,14 @@ by calculating it</p>
         <span class="s1">'status'</span><span class="p">:</span> <span class="s1">'status_reshuma'</span><span class="p">,</span>
         <span class="s1">'status_reshuma'</span><span class="p">:</span> <span class="s1">'status_reshuma'</span><span class="p">,</span>
     <span class="p">}</span>
+    
+    <span class="c1"># Adjust column names specifically for 2021</span>
+    <span class="k">if</span> <span class="n">year</span> <span class="o">==</span> <span class="s1">'2021'</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">'yom'</span><span class="p">:</span> <span class="s1">'taarich'</span><span class="p">,</span>  <span class="c1"># In 2021, 'yom' is actually 'taarich'</span>
+            <span class="s1">'yom_bashavua'</span><span class="p">:</span> <span class="s1">'yom'</span>  <span class="c1"># In 2021, 'yom_bashavua' is the day of the week</span>
+        <span class="p">})</span>
+    
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_mapping</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 
@@ -9148,34 +9163,43 @@ by calculating it</p>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">road_segments</span><span class="p">:</span>
     <span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize_road_segment_columns</span><span class="p">(</span><span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">])</span>
 
-<span class="c1"># Standardize traffic count columns</span>
+<span class="c1"># Standardize traffic count columns for each year</span>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">traffic_counts</span><span class="p">:</span>
-    <span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize_traffic_columns</span><span class="p">(</span><span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">])</span>
+    <span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize_traffic_columns</span><span class="p">(</span><span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">],</span> <span class="n">year</span><span class="p">)</span>
 
 <span class="c1"># Merge traffic counts with road segments for each year</span>
 <span class="n">merged_traffic_counts</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">traffic_counts</span><span class="p">:</span>
+    <span class="c1"># Check if the columns 'kvish' and 'keta' exist before merging</span>
+    <span class="k">if</span> <span class="s1">'kvish'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span> <span class="ow">or</span> <span class="s1">'kvish'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Skipping year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2"> due to missing 'kvish' or 'keta' columns."</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Columns in traffic data: </span><span class="si">{</span><span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Columns in road segment data: </span><span class="si">{</span><span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">continue</span>
+    
     <span class="n">merged_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">],</span> <span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">],</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">'kvish'</span><span class="p">,</span> <span class="s1">'keta'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
-    <span class="n">merged_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">])</span>
-    <span class="n">merged_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Reset index to ensure unique index values</span>
-    <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_data</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">])</span>
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Reset index to ensure unique index values</span>
+        <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No data merged for year </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
 
-<span class="c1"># Check for duplicated columns and resolve them</span>
-<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">merged_traffic_counts</span><span class="p">:</span>
-    <span class="n">cols_to_drop</span> <span class="o">=</span> <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="o">~</span><span class="n">cols_to_drop</span><span class="p">]</span>
-
-<span class="c1"># Concatenate all years together</span>
-<span class="n">combined_traffic_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">merged_traffic_counts</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># Export the merged data to a CSV file</span>
-<span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'combined_traffic_counts_with_coordinates.csv'</span><span class="p">)</span>
-<span class="n">combined_traffic_counts</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="c1"># Display the combined DataFrame to ensure everything is correct</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Combined Traffic Count Data with Coordinates:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">combined_traffic_counts</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">combined_traffic_counts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Check the size of the combined DataFrame</span>
+<span class="c1"># Ensure there is data to concatenate</span>
+<span class="k">if</span> <span class="n">merged_traffic_counts</span><span class="p">:</span>
+    <span class="c1"># Concatenate all years together</span>
+    <span class="n">combined_traffic_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">merged_traffic_counts</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Use a simple file name and save in the current directory</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'combined_traffic_counts_with_coordinates.csv'</span><span class="p">)</span>
+    <span class="n">combined_traffic_counts</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="c1"># Display the combined DataFrame to ensure everything is correct</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Combined Traffic Count Data with Coordinates:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">combined_traffic_counts</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">combined_traffic_counts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Check the size of the combined DataFrame</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No data to concatenate. Please check the input files."</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9203,6 +9227,339 @@ by calculating it</p>
 3             NaN  193638.0  647061.0  
 4             NaN  193638.0  647061.0  
 (621432, 12)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Define the base directory where the combined data is stored</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s1">'../'</span>
+
+<span class="c1"># Load the combined accident and traffic count data</span>
+<span class="n">accident_data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'combined_accident_data.csv'</span><span class="p">)</span>
+<span class="n">traffic_data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'combined_traffic_counts_with_coordinates.csv'</span><span class="p">)</span>
+
+<span class="n">accident_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">accident_data_path</span><span class="p">)</span>
+<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">traffic_data_path</span><span class="p">)</span>
+
+<span class="c1"># Function to remove static columns</span>
+<span class="k">def</span> <span class="nf">remove_static_columns</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">static_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">cleaned_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">static_columns</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cleaned_df</span><span class="p">,</span> <span class="n">static_columns</span>
+
+<span class="c1"># Remove static columns from accident data</span>
+<span class="n">cleaned_accident_data</span><span class="p">,</span> <span class="n">accident_static_columns</span> <span class="o">=</span> <span class="n">remove_static_columns</span><span class="p">(</span><span class="n">accident_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Static columns removed from accident data: </span><span class="si">{</span><span class="n">accident_static_columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Remove static columns from traffic data</span>
+<span class="n">cleaned_traffic_data</span><span class="p">,</span> <span class="n">traffic_static_columns</span> <span class="o">=</span> <span class="n">remove_static_columns</span><span class="p">(</span><span class="n">traffic_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Static columns removed from traffic data: </span><span class="si">{</span><span class="n">traffic_static_columns</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Define output paths for cleaned data</span>
+<span class="n">cleaned_accident_data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'cleaned_accident_data.csv'</span><span class="p">)</span>
+<span class="n">cleaned_traffic_data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'cleaned_traffic_counts_with_coordinates.csv'</span><span class="p">)</span>
+
+<span class="c1"># Save the cleaned data to CSV files</span>
+<span class="n">cleaned_accident_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">cleaned_accident_data_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cleaned_traffic_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">cleaned_traffic_data_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Confirm the files have been saved</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cleaned accident data saved to </span><span class="si">{</span><span class="n">cleaned_accident_data_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cleaned traffic data saved to </span><span class="si">{</span><span class="n">cleaned_traffic_data_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_accident_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_traffic_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\mousa\AppData\Local\Temp\ipykernel_35120\1565537192.py:11: DtypeWarning: Columns (48) have mixed types. Specify dtype option on import or set low_memory=False.
+  accident_data = pd.read_csv(accident_data_path)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Static columns removed from accident data: ['sug_tik']
+Static columns removed from traffic data: []
+Cleaned accident data saved to ../cleaned_accident_data.csv
+Cleaned traffic data saved to ../cleaned_traffic_counts_with_coordinates.csv
+   pk_teuna_fikt  thum_geografi  sug_dereh  semel_yishuv  rehov1  rehov2  \
+0   2.014000e+09            1.0        1.0        7400.0   303.0   306.0   
+1   2.014000e+09            1.0        2.0        2650.0   390.0     NaN   
+2   2.014000e+09            1.0        4.0           0.0     NaN     NaN   
+3   2.014000e+09            1.0        1.0        5000.0  1555.0  1511.0   
+4   2.014000e+09            1.0        2.0        7600.0   505.0     NaN   
+
+    bayit  zomet_ironi  kvish1  kvish2  ...  ezor_tivi  maamad_minizipali  \
+0     NaN     260021.0     NaN     NaN  ...      411.0                0.0   
+1  9999.0          NaN     NaN     NaN  ...      511.0                0.0   
+2     NaN          NaN    20.0     0.0  ...      513.0               99.0   
+3     NaN   11920611.0     NaN     NaN  ...      511.0                0.0   
+4    19.0          NaN     NaN     NaN  ...      246.0                0.0   
+
+   zurat_ishuv  status_igun         x         y  year  ms_tavla  kod  teur  
+0         13.0          1.0  187117.0  693833.0  2014       NaN  NaN   NaN  
+1         16.0          3.0  185113.0  672015.0  2014       NaN  NaN   NaN  
+2         99.0          1.0  177520.0  659502.0  2014       NaN  NaN   NaN  
+3         13.0          1.0  179727.0  663713.0  2014       NaN  NaN   NaN  
+4         16.0          1.0  207503.0  759266.0  2014       NaN  NaN   NaN  
+
+[5 rows x 48 columns]
+     year  kvish  keta  maslul  hodesh  taarich  yom  shaa  kamut_kle_rehev  \
+0  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   0.0           1134.0   
+1  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   1.0            630.0   
+2  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   2.0            500.0   
+3  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   3.0            338.0   
+4  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   4.0            392.0   
+
+   status_reshuma         X         Y  
+0             NaN  193638.0  647061.0  
+1             NaN  193638.0  647061.0  
+2             NaN  193638.0  647061.0  
+3             NaN  193638.0  647061.0  
+4             NaN  193638.0  647061.0  
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Load the cleaned data</span>
+<span class="n">accident_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../cleaned_accident_data.csv'</span><span class="p">)</span>
+<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../cleaned_traffic_counts_with_coordinates.csv'</span><span class="p">)</span>
+
+<span class="c1"># Remove columns with all null values</span>
+<span class="n">accident_data_cleaned</span> <span class="o">=</span> <span class="n">accident_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'all'</span><span class="p">)</span>
+<span class="n">accident_data_cleaned</span> <span class="o">=</span> <span class="n">accident_data_cleaned</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'ms_tavla'</span><span class="p">,</span> <span class="s1">'kod'</span><span class="p">,</span> <span class="s1">'teur'</span><span class="p">])</span>
+<span class="n">accident_data_cleaned</span> <span class="o">=</span> <span class="n">accident_data_cleaned</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'all'</span><span class="p">)</span>
+<span class="n">traffic_data_cleaned</span> <span class="o">=</span> <span class="n">traffic_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'all'</span><span class="p">)</span>
+<span class="n">traffic_data_cleaned</span> <span class="o">=</span> <span class="n">traffic_data_cleaned</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'status_reshuma'</span><span class="p">])</span>
+
+
+<span class="c1"># Save the cleaned data back to CSV</span>
+<span class="n">accident_data_cleaned</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'../cleaned_accident_data_no_null_columns.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">traffic_data_cleaned</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'../cleaned_traffic_counts_no_null_columns.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Display the shapes of the cleaned data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Accident Data Shape After Removing Null Columns:"</span><span class="p">,</span> <span class="n">accident_data_cleaned</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Traffic Data Shape After Removing Null Columns:"</span><span class="p">,</span> <span class="n">traffic_data_cleaned</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\mousa\AppData\Local\Temp\ipykernel_35120\2148190629.py:4: DtypeWarning: Columns (47) have mixed types. Specify dtype option on import or set low_memory=False.
+  accident_data = pd.read_csv('../cleaned_accident_data.csv')
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Accident Data Shape After Removing Null Columns: (87442, 44)
+Traffic Data Shape After Removing Null Columns: (621432, 11)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>MERGING</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Define the base directory where your data is stored</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s1">'../'</span>
+
+<span class="c1"># Load the datasets</span>
+<span class="n">accident_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'cleaned_accident_data_no_null_columns.csv'</span><span class="p">))</span>
+<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'cleaned_traffic_counts_no_null_columns.csv'</span><span class="p">))</span>
+
+<span class="c1"># Display the column names of each dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Accident Data Columns:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">accident_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Traffic Data Columns:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">traffic_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Accident Data Columns:
+Index(['pk_teuna_fikt', 'thum_geografi', 'sug_dereh', 'semel_yishuv', 'rehov1',
+       'rehov2', 'bayit', 'zomet_ironi', 'kvish1', 'kvish2', 'km',
+       'zomet_lo_ironi', 'yehida', 'shnat_teuna', 'hodesh_teuna', 'shaa',
+       'sug_yom', 'yom_layla', 'yom_bashavua', 'humrat_teuna', 'sug_teuna',
+       'had_maslul', 'rav_maslul', 'mehirut_muteret', 'tkinut', 'rohav',
+       'simun_timrur', 'teura', 'mezeg_avir', 'pne_kvish', 'sug_ezem',
+       'merhak_ezem', 'lo_haza', 'ofen_haziya', 'mekom_haziya', 'kivun_haziya',
+       'mahoz', 'nafa', 'ezor_tivi', 'maamad_minizipali', 'zurat_ishuv',
+       'status_igun', 'x', 'y'],
+      dtype='object')
+Traffic Data Columns:
+Index(['year', 'kvish', 'keta', 'maslul', 'hodesh', 'taarich', 'yom', 'shaa',
+       'kamut_kle_rehev', 'X', 'Y'],
+      dtype='object')
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Define the base directory where your data is stored</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s1">'../'</span>
+
+<span class="c1"># Load the datasets</span>
+<span class="n">accident_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'cleaned_accident_data_no_null_columns.csv'</span><span class="p">))</span>
+<span class="n">traffic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'cleaned_traffic_counts_no_null_columns.csv'</span><span class="p">))</span>
+
+<span class="c1"># Aggregate the traffic data by road segment (kvish) and day of the week (yom) to calculate the average traffic volume</span>
+<span class="n">aggregated_traffic_data</span> <span class="o">=</span> <span class="n">traffic_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'kvish'</span><span class="p">,</span> <span class="s1">'yom'</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">'kamut_kle_rehev'</span><span class="p">:</span> <span class="s1">'mean'</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Function to match traffic data to accident data</span>
+<span class="k">def</span> <span class="nf">match_traffic</span><span class="p">(</span><span class="n">accident_row</span><span class="p">,</span> <span class="n">traffic_data</span><span class="p">):</span>
+    <span class="c1"># Match by kvish1</span>
+    <span class="n">traffic_match</span> <span class="o">=</span> <span class="n">traffic_data</span><span class="p">[(</span><span class="n">traffic_data</span><span class="p">[</span><span class="s1">'kvish'</span><span class="p">]</span> <span class="o">==</span> <span class="n">accident_row</span><span class="p">[</span><span class="s1">'kvish1'</span><span class="p">])</span> <span class="o">&amp;</span> 
+                                 <span class="p">(</span><span class="n">traffic_data</span><span class="p">[</span><span class="s1">'yom'</span><span class="p">]</span> <span class="o">==</span> <span class="n">accident_row</span><span class="p">[</span><span class="s1">'yom_bashavua'</span><span class="p">])]</span>
+    
+    <span class="c1"># If no match, try kvish2</span>
+    <span class="k">if</span> <span class="n">traffic_match</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">traffic_match</span> <span class="o">=</span> <span class="n">traffic_data</span><span class="p">[(</span><span class="n">traffic_data</span><span class="p">[</span><span class="s1">'kvish'</span><span class="p">]</span> <span class="o">==</span> <span class="n">accident_row</span><span class="p">[</span><span class="s1">'kvish2'</span><span class="p">])</span> <span class="o">&amp;</span> 
+                                     <span class="p">(</span><span class="n">traffic_data</span><span class="p">[</span><span class="s1">'yom'</span><span class="p">]</span> <span class="o">==</span> <span class="n">accident_row</span><span class="p">[</span><span class="s1">'yom_bashavua'</span><span class="p">])]</span>
+    
+    <span class="c1"># Return the average traffic count if found, else return None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">traffic_match</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">traffic_match</span><span class="p">[</span><span class="s1">'kamut_kle_rehev'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Apply the matching function to each row in the accident data</span>
+<span class="n">accident_data</span><span class="p">[</span><span class="s1">'average_traffic_count'</span><span class="p">]</span> <span class="o">=</span> <span class="n">accident_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">match_traffic</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traffic_data</span><span class="o">=</span><span class="n">aggregated_traffic_data</span><span class="p">)</span>
+
+<span class="c1"># Export the result to a new CSV file</span>
+<span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'accident_data_with_traffic.csv'</span><span class="p">)</span>
+<span class="n">accident_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processed data saved to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Processed data saved to ../accident_data_with_traffic.csv
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Remove accidents that don't have a corresponding traffic count</span>
+<span class="n">cleaned_accident_data</span> <span class="o">=</span> <span class="n">accident_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'average_traffic_count'</span><span class="p">])</span>
+
+<span class="c1"># Export the cleaned data to a new CSV file</span>
+<span class="n">cleaned_output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">'cleaned_accident_data_with_traffic.csv'</span><span class="p">)</span>
+<span class="n">cleaned_accident_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">cleaned_output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cleaned data saved to </span><span class="si">{</span><span class="n">cleaned_output_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Cleaned data saved to ../cleaned_accident_data_with_traffic.csv
 </pre>
 </div>
 </div>
