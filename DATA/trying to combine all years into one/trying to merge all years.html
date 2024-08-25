@@ -9122,15 +9122,48 @@ by calculating it</p>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_mapping</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'kvish'</span><span class="p">,</span> <span class="s1">'keta'</span><span class="p">,</span> <span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">]]</span>
 
+<span class="c1"># Function to standardize traffic count columns</span>
+<span class="k">def</span> <span class="nf">standardize_traffic_columns</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">column_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'shana'</span><span class="p">:</span> <span class="s1">'year'</span><span class="p">,</span>
+        <span class="s1">'shnat_seker'</span><span class="p">:</span> <span class="s1">'year'</span><span class="p">,</span>
+        <span class="s1">'kvish'</span><span class="p">:</span> <span class="s1">'kvish'</span><span class="p">,</span>
+        <span class="s1">'keta'</span><span class="p">:</span> <span class="s1">'keta'</span><span class="p">,</span>
+        <span class="s1">'maslul'</span><span class="p">:</span> <span class="s1">'maslul'</span><span class="p">,</span>
+        <span class="s1">'hodesh'</span><span class="p">:</span> <span class="s1">'hodesh'</span><span class="p">,</span>
+        <span class="s1">'taarich'</span><span class="p">:</span> <span class="s1">'taarich'</span><span class="p">,</span>
+        <span class="s1">'yom'</span><span class="p">:</span> <span class="s1">'yom'</span><span class="p">,</span>
+        <span class="s1">'yom_bashavua'</span><span class="p">:</span> <span class="s1">'yom'</span><span class="p">,</span>  <span class="c1"># Standardize yom_bashavua to yom</span>
+        <span class="s1">'shaa'</span><span class="p">:</span> <span class="s1">'shaa'</span><span class="p">,</span>
+        <span class="s1">'nefah'</span><span class="p">:</span> <span class="s1">'kamut_kle_rehev'</span><span class="p">,</span>  <span class="c1"># Standardize nefah to kamut_kle_rehev</span>
+        <span class="s1">'kamut'</span><span class="p">:</span> <span class="s1">'kamut_kle_rehev'</span><span class="p">,</span>
+        <span class="s1">'kamut_kle_rehev'</span><span class="p">:</span> <span class="s1">'kamut_kle_rehev'</span><span class="p">,</span>
+        <span class="s1">'status'</span><span class="p">:</span> <span class="s1">'status_reshuma'</span><span class="p">,</span>
+        <span class="s1">'status_reshuma'</span><span class="p">:</span> <span class="s1">'status_reshuma'</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_mapping</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+
 <span class="c1"># Standardize road segment columns</span>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">road_segments</span><span class="p">:</span>
     <span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize_road_segment_columns</span><span class="p">(</span><span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">])</span>
+
+<span class="c1"># Standardize traffic count columns</span>
+<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">traffic_counts</span><span class="p">:</span>
+    <span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize_traffic_columns</span><span class="p">(</span><span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">])</span>
 
 <span class="c1"># Merge traffic counts with road segments for each year</span>
 <span class="n">merged_traffic_counts</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">traffic_counts</span><span class="p">:</span>
     <span class="n">merged_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">],</span> <span class="n">road_segments</span><span class="p">[</span><span class="n">year</span><span class="p">],</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">'kvish'</span><span class="p">,</span> <span class="s1">'keta'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
-    <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">])</span>
+    <span class="n">merged_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">])</span>
+    <span class="n">merged_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Reset index to ensure unique index values</span>
+    <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_data</span>
+
+<span class="c1"># Check for duplicated columns and resolve them</span>
+<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">merged_traffic_counts</span><span class="p">:</span>
+    <span class="n">cols_to_drop</span> <span class="o">=</span> <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_traffic_counts</span><span class="p">[</span><span class="n">year</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="o">~</span><span class="n">cols_to_drop</span><span class="p">]</span>
 
 <span class="c1"># Concatenate all years together</span>
 <span class="n">combined_traffic_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">merged_traffic_counts</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -9156,27 +9189,20 @@ by calculating it</p>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Combined Traffic Count Data with Coordinates:
-    shana  kvish  keta  maslul  hodesh  taarich  yom  shaa   nefah  status  \
-0  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   0.0  1134.0     NaN   
-1  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   1.0   630.0     NaN   
-2  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   2.0   500.0     NaN   
-3  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   3.0   338.0     NaN   
-4  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   4.0   392.0     NaN   
+     year  kvish  keta  maslul  hodesh  taarich  yom  shaa  kamut_kle_rehev  \
+0  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   0.0           1134.0   
+1  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   1.0            630.0   
+2  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   2.0            500.0   
+3  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   3.0            338.0   
+4  2016.0    1.0  52.0     1.0     9.0     11.0  1.0   4.0            392.0   
 
-          X         Y  kamut  shnat_seker  yom_bashavua  kamut_kle_rehev  \
-0  193638.0  647061.0    NaN          NaN           NaN              NaN   
-1  193638.0  647061.0    NaN          NaN           NaN              NaN   
-2  193638.0  647061.0    NaN          NaN           NaN              NaN   
-3  193638.0  647061.0    NaN          NaN           NaN              NaN   
-4  193638.0  647061.0    NaN          NaN           NaN              NaN   
-
-   status_reshuma  
-0             NaN  
-1             NaN  
-2             NaN  
-3             NaN  
-4             NaN  
-(621432, 17)
+   status_reshuma         X         Y  
+0             NaN  193638.0  647061.0  
+1             NaN  193638.0  647061.0  
+2             NaN  193638.0  647061.0  
+3             NaN  193638.0  647061.0  
+4             NaN  193638.0  647061.0  
+(621432, 12)
 </pre>
 </div>
 </div>
