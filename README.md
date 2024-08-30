@@ -17,7 +17,7 @@ This project aims to analyze the relationship between traffic volumes and accide
 
 For a detailed explanation of our process and findings, watch the presentation on YouTube:
 
-[![Analyzing Traffic Accidents and Traffic Volumes in Israel](https://img.youtube.com/vi/GYjzFcPF6Mw/0.jpg)](https://youtu.be/GYjzFcPF6Mw)
+[![Analyzing Traffic Accidents and Traffic Volumes in Israel](https://img.youtube.com/vi/fVygUJd1ACU/0.jpg)](https://youtu.be/fVygUJd1ACU)
 
 
 ## Methodology
