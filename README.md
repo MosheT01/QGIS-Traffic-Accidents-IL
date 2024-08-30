@@ -13,6 +13,13 @@ This project aims to analyze the relationship between traffic volumes and accide
 - **Visualization**: Creating insightful maps and graphs using QGIS.
 - **Analysis**: Examining the relationship between traffic data and accident severity.
 
+## Video Overview
+
+For a detailed explanation of our process and findings, watch the presentation on YouTube:
+
+[![Analyzing Traffic Accidents and Traffic Volumes in Israel](https://img.youtube.com/vi/GYjzFcPF6Mw/0.jpg)](https://youtu.be/GYjzFcPF6Mw)
+
+
 ## Methodology
 
 1. **Data Collection**: Gathering data from different sources for the years 2015-2021.
